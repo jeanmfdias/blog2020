@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   def create
     comment = @post.comments.create! comments_params
     CommentsMailer.submitted(comment).deliver_later
+    ActionCable.server.broadcast "comments_channel", content: comment.body, date: comment.created_at.to_s(:long)
 
     redirect_to @post
   end

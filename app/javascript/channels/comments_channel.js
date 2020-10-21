@@ -3,6 +3,7 @@ import consumer from "./consumer"
 consumer.subscriptions.create("CommentsChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
+    console.log('Connected to the room!')
   },
 
   disconnected() {
@@ -10,6 +11,7 @@ consumer.subscriptions.create("CommentsChannel", {
   },
 
   received(data) {
-    // Called when there's incoming data on the websocket for this channel
+    let div = document.querySelector('#comments');
+    div.innerHTML += `<p>${data.content} - ${data.date}</p>`
   }
 });
